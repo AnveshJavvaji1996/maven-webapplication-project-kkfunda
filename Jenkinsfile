@@ -9,46 +9,47 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
-                git branch: 'master',
-                    url: 'https://github.com/AnveshJavvaji1996/spring-boot-thymeleaf.git'
+                git 'https://github.com/AnveshJavvaji1996/maven-webapplication-project-kkfunda.git'
             }
         }
 
-        stage('Maven Build') {
+        stage('Build') {
             steps {
                 sh 'mvn clean package'
             }
         }
 
-       stage('SonarQube Analysis') {
-    steps {
-        withCredentials([string(
-            credentialsId: 'sonar-token',
-            variable: 'SONAR_TOKEN'
-        )]) {
-            sh '''
-                mvn sonar:sonar \
-                  -Dsonar.projectKey=spring-boot-thymeleaf \
-                  -Dsonar.host.url=http://15.207.110.225:9000 \
-                  -Dsonar.token=$SONAR_TOKEN
-            '''
+        stage('SonarQube Report') {
+            steps {
+                sh 'mvn sonar:sonar'
+            }
         }
-    }
-}
-        stage('Deploy to Nexus') {
+
+        stage('Upload to Nexus Repository') {
             steps {
                 sh 'mvn deploy'
             }
         }
-        stage('Deploy to Tomcat') {
-    steps {
-        sh """
-            curl -u anvesh:12345 \
-            --upload-file target/spring-boot-thymeleaf.war \
-            "http://13.206.101.201:8080/manager/text/deploy?path=/spring-boot-thymeleaf&update=true"
-        """
-    }
-}
 
+        stage('Deploy to Tomcat') {
+            steps {
+                echo 'Deploying WAR file using curl...'
+
+                sh '''
+                    curl -u anvesh:12345 \
+                    --upload-file target/maven-web-application.war \
+                    "http://13.233.48.76:8080/manager/text/deploy?path=/maven-web-application&update=true"
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
     }
 }
