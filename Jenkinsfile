@@ -29,7 +29,7 @@ pipeline {
             sh '''
                 mvn sonar:sonar \
                   -Dsonar.projectKey=spring-boot-thymeleaf \
-                  -Dsonar.host.url=http://3.110.155.109:9000 \
+                  -Dsonar.host.url=http://15.207.110.225:9000 \
                   -Dsonar.token=$SONAR_TOKEN
             '''
         }
