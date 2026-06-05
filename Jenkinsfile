@@ -1,3 +1,4 @@
+@Library('Sharedlibs') _  // Load the shared library from GitHub
 pipeline {
     agent any
 
@@ -13,32 +14,14 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('SonarQube Report') {
-            steps {
-                sh 'mvn sonar:sonar'
-            }
-        }
-
-        stage('Upload to Nexus Repository') {
-            steps {
-                sh 'mvn deploy'
-            }
-        }
-
-        stage('Deploy to Tomcat') {
+         stage('Deploy to Tomcat') {
             steps {
                 echo 'Deploying WAR file using curl...'
 
                 sh '''
                     curl -u anvesh:12345 \
                     --upload-file target/maven-web-application.war \
-                    "http://13.233.48.76:8080/manager/text/deploy?path=/maven-web-application&update=true"
+                    "http://13.206.101.76:8080/manager/text/deploy?path=/maven-web-application&update=true"
                 '''
             }
         }
