@@ -1,102 +1,151 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="java.net.*" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>KK FUNDA Home Page</title>
-<link href="images/kkfunda.jpg" rel="icon">
-<!-- Bootstrap CDN -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Education Portal Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
 <style>
-    body {
-        background: #f9f9f9;
-        font-family: Arial, sans-serif;
+    body{
+        background: linear-gradient(135deg,#eef5ff,#d9ecff);
+        min-height:100vh;
+        font-family:'Segoe UI',sans-serif;
     }
-    header {
-        background: linear-gradient(90deg, #007bff, #00c6ff);
-        color: white;
-        padding: 20px;
-        text-align: center;
+
+    .hero{
+        background: linear-gradient(90deg,#4f46e5,#0ea5e9);
+        color:white;
+        padding:40px;
+        text-align:center;
+        box-shadow:0 4px 15px rgba(0,0,0,0.15);
     }
-    h1, h3 {
-        margin: 10px 0;
+
+    .hero h1{
+        font-weight:700;
     }
-    .info-card {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-        padding: 20px;
-        margin: 20px auto;
-        max-width: 700px;
+
+    .info-card{
+        background:white;
+        border:none;
+        border-radius:20px;
+        padding:25px;
+        box-shadow:0 8px 20px rgba(0,0,0,0.08);
+        transition:all 0.3s ease;
+        height:100%;
     }
-    footer {
-        margin-top: 30px;
-        background: #222;
-        color: white;
-        padding: 15px;
-        text-align: center;
+
+    .info-card:hover{
+        transform:translateY(-8px);
+        box-shadow:0 12px 25px rgba(0,0,0,0.15);
     }
-    footer a {
-        color: #00c6ff;
-        text-decoration: none;
+
+    .icon{
+        font-size:40px;
+        margin-bottom:10px;
+    }
+
+    .footer{
+        text-align:center;
+        padding:20px;
+        color:#666;
+        margin-top:30px;
     }
 </style>
 </head>
 <body>
 
-<header>
-    <h1>🚀 Welcome to KK FUNDA DEVOPS AWS Portal 🚀</h1>
-    <h3>Training | Development | Consulting</h3>
-</header>
+<!-- Header -->
+<div class="hero">
+    <h1>📚 Smart Learning Portal</h1>
+    <p class="lead">
+        Explore Technology • Learn Continuously • Build Skills
+    </p>
+</div>
 
-<div class="container">
+<div class="container mt-5">
 
-    <!-- Server Info -->
-    <div class="info-card">
-        <h3>🌐 Server Side Information</h3>
-        <hr>
-        <%
-            InetAddress inetAddress = InetAddress.getLocalHost();
-            String ip = inetAddress.getHostAddress();
-            out.println("<p><b>Server Host Name:</b> " + inetAddress.getHostName() + "</p>");
-            out.println("<p><b>Server IP Address:</b> " + ip + "</p>");
-        %>
+    <div class="row g-4">
+
+        <!-- Server Information -->
+        <div class="col-md-6">
+            <div class="info-card">
+                <div class="icon">🖥️</div>
+                <h3>Server Information</h3>
+                <hr>
+
+                <%
+                    InetAddress server = InetAddress.getLocalHost();
+                    String serverIP = server.getHostAddress();
+                %>
+
+                <p>
+                    <strong>Host Name:</strong>
+                    <%= server.getHostName() %>
+                </p>
+
+                <p>
+                    <strong>IP Address:</strong>
+                    <%= serverIP %>
+                </p>
+            </div>
+        </div>
+
+        <!-- Visitor Information -->
+        <div class="col-md-6">
+            <div class="info-card">
+                <div class="icon">🌐</div>
+                <h3>Visitor Information</h3>
+                <hr>
+
+                <p>
+                    <strong>Client IP:</strong>
+                    <%= request.getRemoteAddr() %>
+                </p>
+
+                <p>
+                    <strong>Client Host:</strong>
+                    <%= request.getRemoteHost() %>
+                </p>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Client Info -->
-    <div class="info-card">
-        <h3>💻 Client Side Information</h3>
-        <hr>
-        <p><b>Client IP Address:</b> <%= request.getRemoteAddr() %></p>
-        <p><b>Client Host Name:</b> <%= request.getRemoteHost() %></p>
-    </div>
+    <!-- Educational Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="info-card text-center">
+                <h3>🎓 Welcome to the Learning Dashboard</h3>
+                <p class="mt-3">
+                    A modern portal designed to demonstrate server-side and
+                    client-side information in a simple and interactive way.
+                </p>
 
-    <!-- Contact Info -->
-    <div class="info-card text-center">
-        <img src="images/kkfunda.jpg" alt="KK FUNDA Logo" width="120" class="mb-3 rounded-circle shadow">
-        <h4>KK FUNDA</h4>
-        <p><b>Address:</b> Martha Halli, Bangalore</p>
-        <p><b>Phone:</b> +91-9676831734</p>
-        <p><b>Email:</b> <a href="mailto:kkeducationblr@gmail.com">kkeducationblr@gmail.com</a></p>
-        <a href="mailto:kkeducation@gmail.com" class="btn btn-primary mt-2">📧 Mail to KK FUNDA</a>
-    </div>
-
-    <!-- Service Links -->
-    <div class="info-card text-center">
-        <h4>⚙️ Our Services</h4>
-        <p><a href="services/employee/getEmployeeDetails" class="btn btn-success">Get Employee Details</a></p>
+                <div class="mt-3">
+                    <span class="badge bg-primary p-2">Java</span>
+                    <span class="badge bg-success p-2">JSP</span>
+                    <span class="badge bg-info p-2">Bootstrap</span>
+                    <span class="badge bg-warning text-dark p-2">Web Technology</span>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
 
-<footer>
-    <p>© 2024 KK FUNDA Training & Development Center</p>
-    <p><small>Powered by <a href="https://google.com/">KK FUNDA</a></small></p>
-</footer>
+<div class="footer">
+    © 2024 Learning Portal Dashboard
+</div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
+```
